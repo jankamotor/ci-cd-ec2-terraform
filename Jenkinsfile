@@ -38,4 +38,11 @@ pipeline {
       cleanWs()
     }
   }
+  post {
+    always {
+       mail to: 'jrivasalcon@gmail.com',
+          subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+          body: "${env.BUILD_URL} has result ${currentBuild.result}"
+    }
+  }
 }
