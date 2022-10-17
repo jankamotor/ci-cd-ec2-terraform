@@ -33,11 +33,11 @@ pipeline {
       }
     }
   }
-  post {
+  /* post {
     always {
       cleanWs()
     }
-  }
+  } */
   post {
     always {
        mail to: 'jrivasalcon@gmail.com',
