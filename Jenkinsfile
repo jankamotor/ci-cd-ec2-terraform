@@ -16,9 +16,7 @@ pipeline {
     }
 
     stage('terraform plan...') {
-      when{
-        branch "dev"
-      }
+      
       steps {
         dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
             sh 'terraform plan'
@@ -28,9 +26,7 @@ pipeline {
     }
 
     stage('terraform apply...') {
-      when{
-        branch 'main'
-      }
+      
       steps {
         dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
             sh 'terraform apply --auto-approve'
