@@ -70,18 +70,6 @@ pipeline {
         
       }
     }
-  }
-  /* post {
-    always {
-      cleanWs()
-    }
-  } */
-  post {
-    always {
-       mail to: 'jrivasalcon@gmail.com',
-          subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-          body: "${env.BUILD_URL} has result ${currentBuild.result}"
-    }
     stage('5 minutes Terraform destroy') {
             when{
                 branch "main"
@@ -97,5 +85,18 @@ pipeline {
                        
             }
         }
+  }
+  /* post {
+    always {
+      cleanWs()
+    }
+  } */
+  post {
+    always {
+       mail to: 'jrivasalcon@gmail.com',
+          subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+          body: "${env.BUILD_URL} has result ${currentBuild.result}"
+    }
+    
   }
 }
