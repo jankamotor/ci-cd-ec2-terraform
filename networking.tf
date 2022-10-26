@@ -17,8 +17,8 @@ resource "aws_subnet" "web_subnet" {
 }
 
 resource "aws_network_interface" "web-eth0" {
-  subnet_id   = aws_subnet.web_subnet.id
-  private_ip  = "172.16.10.20"
+  subnet_id  = aws_subnet.web_subnet.id
+  private_ip = "172.16.10.20"
 
   tags = {
     Name = "web-eth0"

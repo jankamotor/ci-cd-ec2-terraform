@@ -14,7 +14,24 @@ pipeline {
         checkout scm
       }
     }
-
+    stage('terraform fmt check...') {
+      
+      steps {
+        dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
+            sh 'terraform fmt -check -recursive -list=true -diff'
+        }
+        
+      }
+    }
+    stage('terraform lint check...') {
+      
+      steps {
+        dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
+            sh 'tflint'
+        }
+        
+      }
+    }
     stage('terraform plan...') {
       
       steps {
@@ -24,7 +41,24 @@ pipeline {
         
       }
     }
-
+    stage('terraform validate check...') {
+      
+      steps {
+        dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
+            sh 'terraform validate'
+        }
+        
+      }
+    }
+    stage('terraform graph generation...') {
+      
+      steps {
+        dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
+            sh 'terraform graph | dot -Tpng > terraform-graph.png'
+        }
+        
+      }
+    }
     stage('terraform apply...') {
       when{
         branch 'main'
@@ -48,5 +82,20 @@ pipeline {
           subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
           body: "${env.BUILD_URL} has result ${currentBuild.result}"
     }
+    stage('5 minutes Terraform destroy') {
+            when{
+                branch "main"
+            }
+            steps {
+
+                sh 'sleep 300'
+
+                dir('/home/jrivas/proyects/ci-cd-ec2-terraform') {
+                sh 'terraform destroy --auto-approve'
+                }
+                
+                       
+            }
+        }
   }
 }
