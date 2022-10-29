@@ -1,17 +1,18 @@
 variable "aws_region" {
+  type        = string
   description = "The AWS region to deploy the EC2 instance in."
   default     = "us-east-1"
 }
 
 variable "ami-id" {
-    type        = string
-    description = "Image base OS EC2"
-    default     = "ami-09a41e26df464c548"
+  type        = string
+  description = "Image base OS EC2"
+  default     = "ami-09a41e26df464c548"
 
-    validation {
-      condition     = length(var.ami-id) > 4 && substr(var.ami-id, 0, 4) == "ami-"
-      error_message = "The image_id value must be a valid AMI id, starting with \"ami-\"."
-    }
+  validation {
+    condition     = length(var.ami-id) > 4 && substr(var.ami-id, 0, 4) == "ami-"
+    error_message = "The image_id value must be a valid AMI id, starting with \"ami-\"."
+  }
 }
 
 variable "instance_type" {
